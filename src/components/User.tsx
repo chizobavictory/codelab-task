@@ -34,6 +34,7 @@ const User: React.FC = () => {
   const totalUser = userData ? userData.length : 0;
 
   let filteredData: UserData[] | null = null;
+  
 
   const handleSetNumberOfResults = (number: number) => {
     setNumberOfResults(number);
