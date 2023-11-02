@@ -3,8 +3,6 @@ import expand from "../assets/expand_more.svg";
 import useUserData from "../hooks/userData";
 import FilterModal from "./Modal";
 import { UserData } from "../hooks/userData.interface";
-import male from "../assets/gender-male.svg";
-import female from "../assets/gender-female.svg";
 import UserCard from "./UserCard";
 interface GenderFilter {
   id: number;
