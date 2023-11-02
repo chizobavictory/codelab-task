@@ -14,13 +14,11 @@ const User: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [numberOfResults, setNumberOfResults] = useState(10);
   const [filteredUsersByAge, setFilteredUsersByAge] = useState<UserData[] | null>(null);
-  const [, setSelectedGender] = useState<GenderFilter[]>([
+  const [filteredUsersByGender, setfilteredUsersByGender] = useState<UserData[] | null>(null);
+  const [selectedGenderFilters, setSelectedGenderFilters] = useState<GenderFilter[]>([
     { id: 1, text: "Male", checked: false },
     { id: 2, text: "Female", checked: false },
   ]);
-  const handleGenderSelect = (selectedGenders: GenderFilter[]) => {
-    setSelectedGender(selectedGenders);
-  };
 
   const openFilterModal = () => {
     setFilterModalOpen(true);
@@ -71,6 +69,19 @@ const User: React.FC = () => {
     setFilteredUsersByAge(null);
   };
 
+  const handleGenderSelect = (selectedGenders: GenderFilter[]) => {
+    setSelectedGenderFilters(selectedGenders);
+    const filteredUsersByGender =
+      filteredData?.filter((user) => {
+        if (selectedGenders.length === 0) {
+          return true;
+        } else {
+          return selectedGenders.some((filter) => filter.checked && filter.text === user.gender);
+        }
+      }) || null;
+    setfilteredUsersByGender(filteredUsersByGender);
+  };
+
   return (
     <div className="flex flex-col pt-10">
       <div className="flex justify-between items-center">
@@ -96,8 +107,10 @@ const User: React.FC = () => {
       </div>
       <div className="w-full border-t mt-4 border-gray-300" />
       <div className="flex flex-col gap-4 pt-6">
-        {(filteredUsersByAge || filteredData) !== null
-          ? [...(filteredUsersByAge || []), ...(filteredData || [])].map((user, index) => <UserCard key={index} user={user} />)
+        {((filteredUsersByAge  || filteredUsersByGender) || filteredData) !== null
+          ? [...(filteredUsersByAge || []), ...(filteredUsersByGender || []), ...(filteredData || [])].map((user, index) => (
+              <UserCard key={index} user={user} />
+            ))
           : "Loading..."}
       </div>
 
@@ -107,7 +120,8 @@ const User: React.FC = () => {
         onSetNumberOfResults={handleSetNumberOfResults}
         onFilterByAge={handleFilterByAge}
         onFilterByNationality={handleFilterByNationality}
-        onGenderSelect={handleGenderSelect}
+        selectedGenderFilters={selectedGenderFilters}
+        setSelectedGenderFilters={handleGenderSelect}
       />
     </div>
   );

@@ -5,10 +5,11 @@ import FilterDropdown from "./FilterDropdown";
 interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onGenderSelect: (selectedGender: GenderFilter[]) => void; 
   onSetNumberOfResults: (number: number) => void;
   onFilterByAge: () => void;
   onFilterByNationality: () => void;
+  selectedGenderFilters: GenderFilter[];
+  setSelectedGenderFilters: (selectedGenderFilters: GenderFilter[]) => void;
 }
 
 interface GenderFilter {
@@ -19,12 +20,15 @@ interface GenderFilter {
 
 const buttonLabels = ["10", "50", "100", "200", "500", "1000", "2000"];
 
-const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onGenderSelect, onSetNumberOfResults, onFilterByAge, onFilterByNationality }) => {
-  const [gender, setGender] = useState<GenderFilter[]>([
-    { id: 1, text: "Male", checked: false },
-    { id: 2, text: "Female", checked: false },
-  ]);
-
+const FilterModal: React.FC<FilterModalProps> = ({
+  isOpen,
+  onClose,
+  onSetNumberOfResults,
+  onFilterByAge,
+  onFilterByNationality,
+  selectedGenderFilters,
+  setSelectedGenderFilters,
+}) => {
   const [genderDropdown, setGenderDropdown] = useState(false);
 
   const toggleGenderTypesDropdown = () => {
@@ -80,16 +84,18 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onGenderSele
             <div className="flex flex-col gap-3">
               <p className="h-4 text-neutral-900 text-base font-[degularsemibold] leading-normal">Filter by Gender</p>
               <FilterDropdown
-                items={gender}
+                items={selectedGenderFilters} 
                 onItemCheck={(id) => {
-                  const updatedItems = gender.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item));
-                  onGenderSelect(updatedItems); 
+                  const updatedItems = selectedGenderFilters.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item));
+                  console.log(selectedGenderFilters);
+                  setSelectedGenderFilters(updatedItems);
+                  setSelectedGenderFilters(updatedItems); // Update selected gender filters in the parent
                 }}
-                selectedItems={gender.filter((item) => item.checked)}
+                selectedItems={selectedGenderFilters.filter((item) => item.checked)}
                 onToggleDropdown={toggleGenderTypesDropdown}
                 dropdownVisible={genderDropdown}
                 buttonText="Select Gender"
-                onSelect={(selected) => setGender(selected)} 
+                onSelect={(selected) => setSelectedGenderFilters(selected)} // Update selected gender filters in the parent
               />
             </div>
           </div>
