@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import expand from "../assets/expand_more.svg";
 import useUserData from "../hooks/userData";
 import FilterModal from "./Modal";
-import male from "../assets/gender-male.svg";
-import female from "../assets/gender-female.svg";
+import { UserData } from "../hooks/userData.interface";
 
-
-const User = () => {
+const User: React.FC = () => {
   const [isFilterModalOpen, setFilterModalOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const openFilterModal = () => {
     setFilterModalOpen(true);
@@ -17,24 +16,40 @@ const User = () => {
     setFilterModalOpen(false);
   };
 
-  interface FilterItem {
-    id: number;
-    text: string;
-    checked: boolean;
-  }
-
-  const [selectedFilters, setSelectedFilters] = useState<FilterItem[]>([]);
-
-  const handleApplyFilters = (filters: FilterItem[]) => {
-    setSelectedFilters(filters);
-  };
-
   const userData = useUserData(20);
   const totalUser = userData ? userData.length : 0;
 
+  const applyFilters = (filteredData: UserData[] | null) => {
+    setSelectedFilters(filteredData ? filteredData.map((user) => user.gender) : []);
+  };
+
+  const applyFiltersToUserData = (data: UserData[] | null, filters: string[]): UserData[] | null => {
+    if (data === null) {
+      return null;
+    }
+
+    let filteredUserData = [...data];
+
+    if (filters.includes("Age")) {
+      filteredUserData = filteredUserData.sort((a, b) => a.dob.age - b.dob.age);
+    }
+
+    if (filters.includes("Nationality")) {
+      filteredUserData = filteredUserData.sort((a, b) => a.nat.localeCompare(b.nat));
+    }
+
+    if (filters.includes("Male") || filters.includes("Female")) {
+      filteredUserData = filteredUserData.filter((user) => filters.includes(user.gender));
+    }
+
+    return filteredUserData;
+  };
+
+  const filteredUserData = applyFiltersToUserData(userData, selectedFilters);
+
   return (
     <div className="flex flex-col pt-10">
-      <div className="flex justify-between">
+      <div className="flex justify between">
         <div className="text-neutral-900 flex flex-col gap-1">
           <p className="font-[degularbold] text-2xl">{totalUser} Users</p>
           <p className="font-[degularmedium] text-gray-600">Number of selected Users</p>
@@ -50,18 +65,16 @@ const User = () => {
           <input
             className="bg-gray-100 text-neutral-900 p-4 items-center flex gap-2 rounded-full font-[degularsemibold] h-12"
             placeholder="Search users"
-          ></input>
+          />
         </div>
       </div>
       <div className="w-full border-t mt-4 border-gray-300" />
       <div className="flex flex-col gap-4 pt-6">
-        {userData
-          ? userData.map((user, index) => (
+        {filteredUserData !== null
+          ? filteredUserData.map((user, index) => (
               <div key={index} className="flex justify-between">
                 <div className="flex gap-2">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <img src={male} alt="call-made" />
-                  </div>
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">{/* Add the appropriate gender image */}</div>
                   <div className="flex flex-col gap-1">
                     <p className="text-neutral-900 text-base font-[degularmedium]">{`${user.name.first} ${user.name.last}`}</p>
                     <p className="text-gray-600 text-sm font-[degularmedium]">{user.email}</p>
@@ -75,7 +88,7 @@ const User = () => {
             ))
           : "Loading..."}
       </div>{" "}
-      <FilterModal isOpen={isFilterModalOpen} onClose={closeFilterModal} onApplyFilters={handleApplyFilters} />
+      <FilterModal isOpen={isFilterModalOpen} onClose={closeFilterModal} onApplyFilters={applyFilters} />
     </div>
   );
 };

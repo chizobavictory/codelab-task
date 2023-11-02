@@ -7,7 +7,7 @@ import useUserData from "../hooks/userData";
 interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onApplyFilters: (filteredUsers: UserData[] | null) => void;
+  onApplyFilters: (filteredData: UserData[] | null) => void;
 }
 
 const buttonLabels = ["10", "50", "100", "200", "500", "1000", "2000"];
@@ -41,7 +41,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onApplyFilte
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([]);
 
   // Fetch user data using the useUserData hook.
-  const numberOfResults = 100; // You can set the number of results you want to fetch.
+  const numberOfResults = 10; // You can set the number of results you want to fetch.
   const userData = useUserData(numberOfResults);
 
   const handleApplyFilters = () => {
@@ -67,6 +67,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onApplyFilte
       }
     }
 
+    console.log(filteredUsers);
     onApplyFilters(filteredUsers);
     onClose();
   };
