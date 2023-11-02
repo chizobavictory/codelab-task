@@ -5,7 +5,7 @@ import { UserData } from "../hooks/userData.interface";
 import classnames from "classnames";
 
 interface UserCardProps {
-  user: UserData; // Use the imported interface here
+  user: UserData; 
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user }) => {

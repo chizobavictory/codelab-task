@@ -5,7 +5,7 @@ import FilterDropdown from "./FilterDropdown";
 interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onGenderSelect: (selectedGender: GenderFilter[]) => void; // Use the correct prop name and type
+  onGenderSelect: (selectedGender: GenderFilter[]) => void; 
   onSetNumberOfResults: (number: number) => void;
   onFilterByAge: () => void;
   onFilterByNationality: () => void;
@@ -83,13 +83,13 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onGenderSele
                 items={gender}
                 onItemCheck={(id) => {
                   const updatedItems = gender.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item));
-                  onGenderSelect(updatedItems); // Use the correct prop name
+                  onGenderSelect(updatedItems); 
                 }}
                 selectedItems={gender.filter((item) => item.checked)}
                 onToggleDropdown={toggleGenderTypesDropdown}
                 dropdownVisible={genderDropdown}
                 buttonText="Select Gender"
-                onSelect={(selected) => setGender(selected)} // Use the correct prop name
+                onSelect={(selected) => setGender(selected)} 
               />
             </div>
           </div>

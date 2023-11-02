@@ -56,7 +56,6 @@ const User: React.FC = () => {
 
   const handleFilterByNationality = () => {
     if (userData !== null) {
-      // Sort users by nationality in ascending order
       const nationalitySorted = [...userData].sort((a, b) => {
         if (a.nat < b.nat) return -1;
         if (a.nat > b.nat) return 1;
@@ -65,6 +64,11 @@ const User: React.FC = () => {
 
       setFilteredUsersByAge(nationalitySorted);
     }
+  };
+
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query);
+    setFilteredUsersByAge(null);
   };
 
   return (
@@ -86,16 +90,14 @@ const User: React.FC = () => {
             className="bg-gray-100 text-neutral-900 p-4 items-center flex gap-2 rounded-full font-[degularsemibold] h-12"
             placeholder="Search users"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearchQueryChange(e.target.value)}
           />
         </div>
       </div>
       <div className="w-full border-t mt-4 border-gray-300" />
       <div className="flex flex-col gap-4 pt-6">
-        {filteredUsersByAge !== null
-          ? filteredUsersByAge.map((user, index) => <UserCard key={index} user={user} />)
-          : filteredData !== null
-          ? filteredData.map((user, index) => <UserCard key={index} user={user} />)
+        {(filteredUsersByAge || filteredData) !== null
+          ? [...(filteredUsersByAge || []), ...(filteredData || [])].map((user, index) => <UserCard key={index} user={user} />)
           : "Loading..."}
       </div>
 

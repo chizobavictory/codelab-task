@@ -3,7 +3,7 @@ import React from "react";
 interface FilterDropdownProps {
   items: { id: number; text: string; checked: boolean }[];
   onItemCheck: (id: number) => void;
-  onSelect: (selected: { id: number; text: string; checked: boolean }[]) => void; // Add onSelect prop
+  onSelect: (selected: { id: number; text: string; checked: boolean }[]) => void;
   selectedItems: { id: number; text: string; checked: boolean }[];
   onToggleDropdown: () => void;
   dropdownVisible: boolean;
@@ -13,7 +13,7 @@ interface FilterDropdownProps {
 const FilterDropdown: React.FC<FilterDropdownProps> = ({
   items,
   onItemCheck,
-  onSelect, // Add onSelect prop
+  onSelect,
   selectedItems,
   onToggleDropdown,
   dropdownVisible,
@@ -24,17 +24,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
     const index = updatedSelectedItems.findIndex((i) => i.id === item.id);
 
     if (index !== -1) {
-      // If the item is in the selected items array, toggle its checked property
       updatedSelectedItems[index] = { ...item, checked: !item.checked };
     } else {
-      // If the item is not in the selected items array, add it
       updatedSelectedItems.push(item);
     }
-
-    // Call the onSelect prop to update the parent component's state
     onSelect(updatedSelectedItems);
-
-    // Call the onItemCheck prop to handle any additional logic
     onItemCheck(item.id);
   };
 
