@@ -1,27 +1,12 @@
-import widgets from "../assets/widgets.svg";
 import logo from "../assets/react.svg";
-import home from "../assets/home.svg";
-import chart from "../assets/insert_chart.svg";
-import payments from "../assets/payments.svg";
-import crm from "../assets/group.svg";
-// import group from "../assets/group.svg";
 import notifications from "../assets/notifications.svg";
 import chat from "../assets/chat.svg";
 import menu from "../assets/menu.svg";
 import avi from "../assets/avi.svg";
 import { useState } from "react";
-import expand from "../assets/expandwhite.svg";
 
 const Navbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [appsButtonClicked, setAppsButtonClicked] = useState(false);
-
   const [userDropdownVisible, setUserDropdownVisible] = useState(false);
-
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-    setAppsButtonClicked(!appsButtonClicked);
-  };
 
   const toggleUserDropdown = () => {
     setUserDropdownVisible(!userDropdownVisible);
