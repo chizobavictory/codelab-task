@@ -16,8 +16,8 @@ const User: React.FC = () => {
   const [filteredUsersByAge, setFilteredUsersByAge] = useState<UserData[] | null>(null);
   const [filteredUsersByGender, setfilteredUsersByGender] = useState<UserData[] | null>(null);
   const [selectedGenderFilters, setSelectedGenderFilters] = useState<GenderFilter[]>([
-    { id: 1, text: "Male", checked: false },
-    { id: 2, text: "Female", checked: false },
+    { id: 1, text: "male", checked: false },
+    { id: 2, text: "female", checked: false },
   ]);
 
   const openFilterModal = () => {
