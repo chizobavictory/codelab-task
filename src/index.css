@@ -1,13 +1,38 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@font-face {
+  font-family: 'degularregular';
+  src: url('../public/fonts/Degular-Regular.otf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'degularbold';
+  src: url('../public/fonts/Degular-Bold.otf');
+}
+
+@font-face {
+  font-family: 'degularblack';
+  src: url('../public/fonts/Degular-Black.otf');
+}
+
+@font-face {
+  font-family: 'degularlight';
+  src: url('../public/fonts/Degular-Light.otf');
+}
+
+@font-face {
+  font-family: 'degularmedium';
+  src: url('../public/fonts/Degular-Medium.otf');
+}
+
+@font-face {
+  font-family: 'degularthin';
+  src: url('../public/fonts/Degular-Thin.otf');
+}
+
+@font-face {
+  font-family: 'degularsemibold';
+  src: url('../public/fonts/Degular-Semibold.otf');
 }
