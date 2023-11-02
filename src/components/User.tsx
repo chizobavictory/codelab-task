@@ -4,6 +4,8 @@ import useUserData from "../hooks/userData";
 import FilterModal from "./Modal";
 import { UserData } from "../hooks/userData.interface";
 import male from "../assets/gender-male.svg";
+import female from "../assets/gender-female.svg";
+import UserCard from "./UserCard";
 interface GenderFilter {
   id: number;
   text: string;
@@ -34,7 +36,7 @@ const User: React.FC = () => {
   const totalUser = userData ? userData.length : 0;
 
   let filteredData: UserData[] | null = null;
-  
+
   const handleSetNumberOfResults = (number: number) => {
     setNumberOfResults(number);
   };
@@ -93,39 +95,9 @@ const User: React.FC = () => {
       <div className="w-full border-t mt-4 border-gray-300" />
       <div className="flex flex-col gap-4 pt-6">
         {filteredUsersByAge !== null
-          ? filteredUsersByAge.map((user, index) => (
-              <div key={index} className="flex justify-between">
-                <div className="flex gap-2">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <img src={male} alt="male" />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-neutral-900 text-base font-[degularmedium]">{`${user.name.first} ${user.name.last}`}</p>
-                    <p className="text-gray-600 text-sm font-[degularmedium]">{user.email}</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 items-end">
-                  <p className="text-base font-[degularbold] text-neutral-900">{`Age: ${user.dob.age}`}</p>
-                  <p className="text-sm font-[degularmedium] text-gray-600">{user.nat}</p>
-                </div>
-              </div>
-            ))
+          ? filteredUsersByAge.map((user, index) => <UserCard key={index} user={user} />)
           : filteredData !== null
-          ? filteredData.map((user, index) => (
-              <div key={index} className="flex justify-between">
-                <div className="flex gap-2">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">{/* Add the appropriate gender image */}</div>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-neutral-900 text-base font-[degularmedium]">{`${user.name.first} ${user.name.last}`}</p>
-                    <p className="text-gray-600 text-sm font-[degularmedium]">{user.email}</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 items-end">
-                  <p className="text-base font-[degularbold] text-neutral-900">{`Age: ${user.dob.age}`}</p>
-                  <p className="text-sm font-[degularmedium] text-gray-600">{user.nat}</p>
-                </div>
-              </div>
-            ))
+          ? filteredData.map((user, index) => <UserCard key={index} user={user} />)
           : "Loading..."}
       </div>
 
