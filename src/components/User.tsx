@@ -35,7 +35,6 @@ const User: React.FC = () => {
 
   let filteredData: UserData[] | null = null;
   
-
   const handleSetNumberOfResults = (number: number) => {
     setNumberOfResults(number);
   };
